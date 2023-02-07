@@ -4,7 +4,9 @@ import me.sky.recipe.model.Ingredient;
 import me.sky.recipe.services.IngredientService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -18,11 +20,30 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
+    public List<Ingredient> getAllIngredient() {
+        return new ArrayList<>(ingredientsMap.values());
+    }
+
+    @Override
     public Ingredient getIngredient(int num) {
-        if (ingredientsMap.containsKey(num)) {
-            return ingredientsMap.get(num);
-        } else {
-            return null;
+        return ingredientsMap.getOrDefault(num, null);
+    }
+
+    @Override
+    public Ingredient editIngredient(int id, Ingredient ingredient) {
+        if (ingredientsMap.containsKey(id)) {
+            ingredientsMap.put(id, ingredient);
+            return ingredient;
         }
+        return null;
+    }
+
+    @Override
+    public Boolean deleteIngredient(int id) {
+        if (ingredientsMap.containsKey(id)) {
+            ingredientsMap.remove(id);
+            return true;
+        }
+        return false;
     }
 }
