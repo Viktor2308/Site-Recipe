@@ -10,7 +10,7 @@ import java.util.List;
 public class Recipe {
     private String name;
     private int cookingTimeMin;
-    private List<Ingredients> ingredientsList;
+    private List<Ingredient> ingredientsList;
     private List<String> cookingInstructionsList;
 
 

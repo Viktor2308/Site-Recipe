@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/recipe")
 public class RecipeController {
-    private RecipeService recipeService;
+    private final RecipeService recipeService;
 
     public RecipeController(RecipeService recipeService) {
         this.recipeService = recipeService;
     }
 
-    @PostMapping(value = "/recipe")
+    @PostMapping("/")
     public ResponseEntity<?> create(@RequestBody Recipe recipe) {
         recipeService.addNewRecipe(recipe);
         return new ResponseEntity<>(HttpStatus.CREATED);

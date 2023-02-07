@@ -10,13 +10,11 @@ import java.util.Map;
 @Service
 public class RecipeServiceImpl implements RecipeService {
     private static int idRecipe = 0;
-    private static Map<Integer, Recipe> recipeMap = new LinkedHashMap<>();
+    private final Map<Integer, Recipe> recipeMap = new LinkedHashMap<>();
 
     @Override
     public void addNewRecipe(Recipe recipe) {
-        if (recipe != null && !recipeMap.containsValue(recipe)) {
-            recipeMap.put(idRecipe++, recipe);
-        }
+        recipeMap.put(idRecipe++, recipe);
     }
 
     @Override
