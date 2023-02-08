@@ -1,5 +1,12 @@
 package me.sky.recipe.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import me.sky.recipe.model.Recipe;
 import me.sky.recipe.services.RecipeService;
 import org.springframework.http.HttpStatus;
@@ -11,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/recipe")
+@Tag(name = "Рецепты", description = "CRUD - операции по работе с рецептами.")
 public class RecipeController {
     private final RecipeService recipeService;
 
@@ -19,18 +27,71 @@ public class RecipeController {
     }
 
     @PostMapping("/")
+    @Operation(
+            summary = "создание рецепта",
+            description = "создание нового рецепта"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "рецепт создан"
+            )
+    }
+    )
     public ResponseEntity<?> create(@RequestBody Recipe recipe) {
         recipeService.addNewRecipe(recipe);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/")
+    @Operation(
+            summary = "вся коллекция рецептов",
+            description = "получения списка всех рецептов"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "рецепты найдены",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    array = @ArraySchema(
+                                            schema = @Schema(
+                                                    implementation = Recipe.class
+                                            )
+                                    )
+                            )
+                    }
+            )
+    }
+    )
     public ResponseEntity<List<Recipe>> read() {
         final List<Recipe> recipe = recipeService.getAllRecipe();
         return new ResponseEntity<>(recipe, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
+    @Operation(
+            summary = "Поиск рецепта",
+            description = "получение рецепта по id"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "рецепт найден",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    array = @ArraySchema(
+                                            schema = @Schema(
+                                                    implementation = Recipe.class
+                                            )
+                                    )
+                            )
+                    }
+            )
+    }
+    )
     public ResponseEntity<Recipe> read(@PathVariable(name = "id") int id) {
         final Recipe recipe = recipeService.getRecipe(id);
         return recipe != null
@@ -39,6 +100,27 @@ public class RecipeController {
     }
 
     @PutMapping("/{id}")
+    @Operation(
+            summary = "Редактирование рецепта",
+            description = "поиск рецепта и его редактирование по id"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "рецепт найден",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    array = @ArraySchema(
+                                            schema = @Schema(
+                                                    implementation = Recipe.class
+                                            )
+                                    )
+                            )
+                    }
+            )
+    }
+    )
     public ResponseEntity<Recipe> create(@PathVariable int id, @RequestBody Recipe recipe) {
         final Recipe newRecipe = recipeService.editRecipe(id, recipe);
         return newRecipe != null
@@ -47,6 +129,10 @@ public class RecipeController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(
+            summary = "Удаление рецепта.",
+            description = "Поиск рецепта по id и его удаление."
+    )
     public ResponseEntity<?> deleteRecipe(@PathVariable(name = "id") int id) {
         return recipeService.deleteRecipe(id)
                 ? new ResponseEntity<>(HttpStatus.OK)
