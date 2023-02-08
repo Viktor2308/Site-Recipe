@@ -4,7 +4,9 @@ import me.sky.recipe.model.Recipe;
 import me.sky.recipe.services.RecipeService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -18,11 +20,30 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
+    public List<Recipe> getAllRecipe() {
+        return new ArrayList<>(recipeMap.values());
+    }
+
+    @Override
     public Recipe getRecipe(int num) {
-        if (recipeMap.containsKey(num)) {
-            return recipeMap.get(num);
-        } else {
-            return null;
+        return recipeMap.get(num);
+    }
+
+    @Override
+    public Recipe editRecipe(int id, Recipe recipe) {
+        if (recipeMap.containsKey(id)) {
+            recipeMap.put(id, recipe);
+            return recipe;
         }
+        return null;
+    }
+
+    @Override
+    public boolean deleteRecipe(int id) {
+        if (recipeMap.containsKey(id)) {
+            recipeMap.remove(id);
+            return true;
+        }
+        return false;
     }
 }

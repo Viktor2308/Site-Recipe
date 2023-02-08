@@ -2,8 +2,17 @@ package me.sky.recipe.services;
 
 import me.sky.recipe.model.Ingredient;
 
-public interface IngredientService {
-    public void addNewIngredient(Ingredient ingredients);
+import java.util.List;
 
-    public Ingredient getIngredient(int num);
+public interface IngredientService {
+    void addNewIngredient(Ingredient ingredients);
+
+    List<Ingredient> getAllIngredient();
+
+    Ingredient getIngredient(int id);
+
+    Ingredient editIngredient(int id, Ingredient ingredient);
+
+    boolean deleteIngredient(int id);
 }
+
