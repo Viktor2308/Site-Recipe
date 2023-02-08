@@ -20,9 +20,7 @@ public class IngredientController {
     @GetMapping(value = "/")
     public ResponseEntity<List<Ingredient>> read() {
         final List<Ingredient> ingredient = ingredientService.getAllIngredient();
-        return ingredient != null && !ingredient.isEmpty()
-                ? new ResponseEntity<>(ingredient, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(ingredient, HttpStatus.OK);
     }
 
     @PostMapping("/")

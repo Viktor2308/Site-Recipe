@@ -26,7 +26,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Recipe getRecipe(int num) {
-        return recipeMap.getOrDefault(num, null);
+        return recipeMap.get(num);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public Boolean deleteRecipe(int id) {
+    public boolean deleteRecipe(int id) {
         if (recipeMap.containsKey(id)) {
             recipeMap.remove(id);
             return true;

@@ -13,6 +13,6 @@ public interface RecipeService {
 
     Recipe editRecipe(int id, Recipe recipe);
 
-    Boolean deleteRecipe(int id);
+    boolean deleteRecipe(int id);
 
 }

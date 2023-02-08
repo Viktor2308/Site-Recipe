@@ -27,9 +27,7 @@ public class RecipeController {
     @GetMapping(value = "/")
     public ResponseEntity<List<Recipe>> read() {
         final List<Recipe> recipe = recipeService.getAllRecipe();
-        return recipe != null && !recipe.isEmpty()
-                ? new ResponseEntity<>(recipe, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(recipe, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

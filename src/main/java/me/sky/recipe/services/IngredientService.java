@@ -13,6 +13,6 @@ public interface IngredientService {
 
     Ingredient editIngredient(int id, Ingredient ingredient);
 
-    Boolean deleteIngredient(int id);
+    boolean deleteIngredient(int id);
 }
 

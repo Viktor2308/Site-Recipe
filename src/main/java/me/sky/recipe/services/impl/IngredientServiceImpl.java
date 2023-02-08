@@ -26,7 +26,7 @@ public class IngredientServiceImpl implements IngredientService {
 
     @Override
     public Ingredient getIngredient(int num) {
-        return ingredientsMap.getOrDefault(num, null);
+        return ingredientsMap.get(num);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    public Boolean deleteIngredient(int id) {
+    public boolean deleteIngredient(int id) {
         if (ingredientsMap.containsKey(id)) {
             ingredientsMap.remove(id);
             return true;
