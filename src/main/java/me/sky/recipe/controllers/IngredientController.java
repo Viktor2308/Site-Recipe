@@ -31,7 +31,7 @@ public class IngredientController {
             description = "получения списка всех ингредиентов"
     )
     @ApiResponses(value = {
-            @ApiResponse (
+            @ApiResponse(
                     responseCode = "200",
                     description = "ингредиенты найдены",
                     content = {
@@ -75,20 +75,22 @@ public class IngredientController {
             description = "получение ингредиента по id"
     )
     @ApiResponses(value = {
-            @ApiResponse (
+            @ApiResponse(
                     responseCode = "200",
                     description = "ингредиент найден",
                     content = {
                             @Content(
                                     mediaType = "application/json",
                                     array = @ArraySchema(
-                                            schema = @Schema(
-                                                    implementation = Ingredient.class
-                                            )
+                                            schema = @Schema(implementation = Ingredient.class)
                                     )
                             )
                     }
-            )
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Нет данных - ингредиента с таким id не существует.")
+
     }
     )
     public ResponseEntity<Ingredient> getIngredient(@PathVariable(name = "id") int id) {
@@ -104,7 +106,7 @@ public class IngredientController {
             description = "получение ингредиента по id и его редактирование"
     )
     @ApiResponses(value = {
-            @ApiResponse (
+            @ApiResponse(
                     responseCode = "200",
                     description = "ингредиент изменен",
                     content = {
@@ -117,7 +119,10 @@ public class IngredientController {
                                     )
                             )
                     }
-            )
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Нет данных - ингредиента с таким id не существует.")
     }
     )
     public ResponseEntity<Ingredient> editIngredient(@PathVariable int id, @RequestBody Ingredient ingredient) {
@@ -132,6 +137,15 @@ public class IngredientController {
     @Operation(
             summary = "Удаление игредиента.",
             description = "Поиск ингредиента по id и его удаление."
+    )
+    @ApiResponses( value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Игредиент с id удален."),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Нет данных - ингредиента с таким id не существует.")
+    }
     )
     public ResponseEntity<?> deleteIngredient(@PathVariable(name = "id") int id) {
         return ingredientService.deleteIngredient(id)

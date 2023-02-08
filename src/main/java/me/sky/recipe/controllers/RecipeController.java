@@ -89,7 +89,12 @@ public class RecipeController {
                                     )
                             )
                     }
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Нет данных - рецепта с таким id не существует."
             )
+
     }
     )
     public ResponseEntity<Recipe> read(@PathVariable(name = "id") int id) {
@@ -107,7 +112,7 @@ public class RecipeController {
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "рецепт найден",
+                    description = "Рецепт найден",
                     content = {
                             @Content(
                                     mediaType = "application/json",
@@ -118,7 +123,11 @@ public class RecipeController {
                                     )
                             )
                     }
-            )
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Нет данных - рецепта с таким id не существует.")
+
     }
     )
     public ResponseEntity<Recipe> create(@PathVariable int id, @RequestBody Recipe recipe) {
@@ -132,6 +141,15 @@ public class RecipeController {
     @Operation(
             summary = "Удаление рецепта.",
             description = "Поиск рецепта по id и его удаление."
+    )
+    @ApiResponses( value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Рецепт с id удален."),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Нет данных - рецепта с таким id не существует.")
+    }
     )
     public ResponseEntity<?> deleteRecipe(@PathVariable(name = "id") int id) {
         return recipeService.deleteRecipe(id)
