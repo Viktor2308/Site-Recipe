@@ -12,7 +12,7 @@ public class ValidationServiceImpl implements ValidationService {
     @Override
     public boolean validate(Recipe recipe) {
         return recipe != null
-                && StringUtils.isEmpty(recipe.getName())
+                && !StringUtils.isEmpty(recipe.getName())
                 && recipe.getCookingTimeMin() > 0
                 && recipe.getIngredientsList() != null
                 && recipe.getCookingInstructionsList() != null
@@ -23,7 +23,7 @@ public class ValidationServiceImpl implements ValidationService {
     @Override
     public boolean validate(Ingredient ingredient) {
         return ingredient != null
-                && StringUtils.isEmpty(ingredient.getName())
+                && !StringUtils.isEmpty(ingredient.getName())
                 && ingredient.getWeight() >0
                 && ingredient.getUnitOfMeasurement() != null;
     }
