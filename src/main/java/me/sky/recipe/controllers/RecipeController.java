@@ -90,11 +90,6 @@ public class RecipeController {
                             )
                     }
             ),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "Нет данных - рецепта с таким id не существует."
-            )
-
     }
     )
     public ResponseEntity<Recipe> read(@PathVariable(name = "id") int id) {
@@ -123,11 +118,7 @@ public class RecipeController {
                                     )
                             )
                     }
-            ),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "Нет данных - рецепта с таким id не существует.")
-
+            )
     }
     )
     public ResponseEntity<Recipe> create(@PathVariable int id, @RequestBody Recipe recipe) {

@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.util.List;
 
+/**
+ * Recipe
+ */
 @Data
 @AllArgsConstructor
 public class Recipe {

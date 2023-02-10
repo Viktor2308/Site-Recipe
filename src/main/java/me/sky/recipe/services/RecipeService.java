@@ -3,7 +3,9 @@ package me.sky.recipe.services;
 import me.sky.recipe.model.Recipe;
 
 import java.util.List;
-
+/**
+ * service for work with recipe
+ */
 public interface RecipeService {
     void addNewRecipe(Recipe recipe);
 

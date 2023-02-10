@@ -87,10 +87,6 @@ public class IngredientController {
                             )
                     }
             ),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "Нет данных - ингредиента с таким id не существует.")
-
     }
     )
     public ResponseEntity<Ingredient> getIngredient(@PathVariable(name = "id") int id) {
@@ -120,9 +116,6 @@ public class IngredientController {
                             )
                     }
             ),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "Нет данных - ингредиента с таким id не существует.")
     }
     )
     public ResponseEntity<Ingredient> editIngredient(@PathVariable int id, @RequestBody Ingredient ingredient) {

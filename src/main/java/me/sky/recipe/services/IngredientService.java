@@ -4,6 +4,9 @@ import me.sky.recipe.model.Ingredient;
 
 import java.util.List;
 
+/**
+ * service for work with ingredients
+ */
 public interface IngredientService {
     void addNewIngredient(Ingredient ingredients);
 
