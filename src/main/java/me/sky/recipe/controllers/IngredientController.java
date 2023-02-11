@@ -32,8 +32,8 @@ public class IngredientController {
     )
     @ApiResponses(value = {
             @ApiResponse(
-                    responseCode = "200",
-                    description = "ингредиенты найдены",
+                    responseCode = "201",
+                    description = "Ингредиенты найдены",
                     content = {
                             @Content(
                                     mediaType = "application/json",
@@ -44,6 +44,10 @@ public class IngredientController {
                                     )
                             )
                     }
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Ингредиенты не найдены"
             )
     }
     )
@@ -59,7 +63,7 @@ public class IngredientController {
     )
     @ApiResponses(value = {
             @ApiResponse(
-                    responseCode = "200",
+                    responseCode = "201",
                     description = "ингредиент создан"
             )
     }
@@ -76,17 +80,21 @@ public class IngredientController {
     )
     @ApiResponses(value = {
             @ApiResponse(
-                    responseCode = "200",
+                    responseCode = "201",
                     description = "ингредиент найден",
                     content = {
                             @Content(
                                     mediaType = "application/json",
-                                    array = @ArraySchema(
-                                            schema = @Schema(implementation = Ingredient.class)
+                                    schema = @Schema(
+                                            implementation = Ingredient.class
                                     )
                             )
                     }
             ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Рецепт не найден"
+            )
     }
     )
     public ResponseEntity<Ingredient> getIngredient(@PathVariable(name = "id") int id) {
@@ -103,7 +111,7 @@ public class IngredientController {
     )
     @ApiResponses(value = {
             @ApiResponse(
-                    responseCode = "200",
+                    responseCode = "201",
                     description = "ингредиент изменен",
                     content = {
                             @Content(
@@ -131,7 +139,7 @@ public class IngredientController {
             summary = "Удаление игредиента.",
             description = "Поиск ингредиента по id и его удаление."
     )
-    @ApiResponses( value = {
+    @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
                     description = "Игредиент с id удален."),

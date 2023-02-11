@@ -33,7 +33,7 @@ public class RecipeController {
     )
     @ApiResponses(value = {
             @ApiResponse(
-                    responseCode = "200",
+                    responseCode = "201",
                     description = "рецепт создан"
             )
     }
@@ -50,7 +50,7 @@ public class RecipeController {
     )
     @ApiResponses(value = {
             @ApiResponse(
-                    responseCode = "200",
+                    responseCode = "201",
                     description = "рецепты найдены",
                     content = {
                             @Content(
@@ -62,6 +62,10 @@ public class RecipeController {
                                     )
                             )
                     }
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Рецепты не найдены"
             )
     }
     )
@@ -77,19 +81,21 @@ public class RecipeController {
     )
     @ApiResponses(value = {
             @ApiResponse(
-                    responseCode = "200",
+                    responseCode = "201",
                     description = "рецепт найден",
                     content = {
                             @Content(
                                     mediaType = "application/json",
-                                    array = @ArraySchema(
-                                            schema = @Schema(
-                                                    implementation = Recipe.class
-                                            )
+                                    schema = @Schema(
+                                            implementation = Recipe.class
                                     )
                             )
                     }
             ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "рецепт не найден"
+            )
     }
     )
     public ResponseEntity<Recipe> read(@PathVariable(name = "id") int id) {
@@ -106,8 +112,8 @@ public class RecipeController {
     )
     @ApiResponses(value = {
             @ApiResponse(
-                    responseCode = "200",
-                    description = "Рецепт найден",
+                    responseCode = "201",
+                    description = "Рецепт изменен",
                     content = {
                             @Content(
                                     mediaType = "application/json",
@@ -133,7 +139,7 @@ public class RecipeController {
             summary = "Удаление рецепта.",
             description = "Поиск рецепта по id и его удаление."
     )
-    @ApiResponses( value = {
+    @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
                     description = "Рецепт с id удален."),
