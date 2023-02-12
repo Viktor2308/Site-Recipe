@@ -32,7 +32,7 @@ public class IngredientController {
     )
     @ApiResponses(value = {
             @ApiResponse(
-                    responseCode = "201",
+                    responseCode = "200",
                     description = "Ингредиенты найдены",
                     content = {
                             @Content(
@@ -80,7 +80,7 @@ public class IngredientController {
     )
     @ApiResponses(value = {
             @ApiResponse(
-                    responseCode = "201",
+                    responseCode = "200",
                     description = "ингредиент найден",
                     content = {
                             @Content(
@@ -111,7 +111,7 @@ public class IngredientController {
     )
     @ApiResponses(value = {
             @ApiResponse(
-                    responseCode = "201",
+                    responseCode = "200",
                     description = "ингредиент изменен",
                     content = {
                             @Content(

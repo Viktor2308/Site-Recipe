@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import me.sky.recipe.model.Ingredient;
 import me.sky.recipe.model.Recipe;
 import me.sky.recipe.services.RecipeService;
 import org.springframework.http.HttpStatus;
@@ -50,7 +51,7 @@ public class RecipeController {
     )
     @ApiResponses(value = {
             @ApiResponse(
-                    responseCode = "201",
+                    responseCode = "200",
                     description = "рецепты найдены",
                     content = {
                             @Content(
@@ -81,7 +82,7 @@ public class RecipeController {
     )
     @ApiResponses(value = {
             @ApiResponse(
-                    responseCode = "201",
+                    responseCode = "200",
                     description = "рецепт найден",
                     content = {
                             @Content(
@@ -112,15 +113,13 @@ public class RecipeController {
     )
     @ApiResponses(value = {
             @ApiResponse(
-                    responseCode = "201",
+                    responseCode = "200",
                     description = "Рецепт изменен",
                     content = {
                             @Content(
                                     mediaType = "application/json",
-                                    array = @ArraySchema(
-                                            schema = @Schema(
-                                                    implementation = Recipe.class
-                                            )
+                                    schema = @Schema(
+                                            implementation = Ingredient.class
                                     )
                             )
                     }
