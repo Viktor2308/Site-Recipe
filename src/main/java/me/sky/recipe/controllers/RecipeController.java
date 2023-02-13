@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import me.sky.recipe.model.Ingredient;
 import me.sky.recipe.model.Recipe;
 import me.sky.recipe.services.RecipeService;
 import org.springframework.http.HttpStatus;
@@ -33,7 +34,7 @@ public class RecipeController {
     )
     @ApiResponses(value = {
             @ApiResponse(
-                    responseCode = "200",
+                    responseCode = "201",
                     description = "рецепт создан"
             )
     }
@@ -62,6 +63,10 @@ public class RecipeController {
                                     )
                             )
                     }
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Рецепты не найдены"
             )
     }
     )
@@ -114,8 +119,11 @@ public class RecipeController {
                             @Content(
                                     mediaType = "application/json",
                                     schema = @Schema(
+
                                             implementation = Recipe.class
-                                    )
+
+
+                                  )
                             )
                     }
             )
@@ -133,7 +141,7 @@ public class RecipeController {
             summary = "Удаление рецепта.",
             description = "Поиск рецепта по id и его удаление."
     )
-    @ApiResponses( value = {
+    @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
                     description = "Рецепт с id удален."),
