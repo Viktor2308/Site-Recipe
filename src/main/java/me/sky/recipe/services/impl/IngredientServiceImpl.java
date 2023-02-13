@@ -19,7 +19,7 @@ public class IngredientServiceImpl implements IngredientService {
     private Map<Integer, Ingredient> ingredientsMap = new LinkedHashMap<>();
     private final ValidationService validationService;
     private final FilesService filesService;
-    private static final String DATA_FILE_NAME = "ingredientsData";
+    public static final String INGREDIENTS_DATA = "ingredientsData";
 
 
     public IngredientServiceImpl(ValidationService validationService, FilesService filesService) {
@@ -33,7 +33,7 @@ public class IngredientServiceImpl implements IngredientService {
             throw new ValidationException(ingredient.toString());
         }
         ingredientsMap.put(idIngredients++, ingredient);
-        filesService.saveToFile(ingredientsMap, DATA_FILE_NAME);
+        filesService.saveToFile(ingredientsMap, INGREDIENTS_DATA);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class IngredientServiceImpl implements IngredientService {
     public Ingredient editIngredient(int id, Ingredient ingredient) {
         if (ingredientsMap.containsKey(id)) {
             ingredientsMap.put(id, ingredient);
-            filesService.saveToFile(ingredientsMap, DATA_FILE_NAME);
+            filesService.saveToFile(ingredientsMap, INGREDIENTS_DATA);
             return ingredient;
         }
         return null;
@@ -72,7 +72,7 @@ public class IngredientServiceImpl implements IngredientService {
 
     private void readFromFile() {
         try {
-            String json = filesService.readFromFile(DATA_FILE_NAME);
+            String json = filesService.readFromFile(INGREDIENTS_DATA);
             ingredientsMap = new ObjectMapper().readValue(json,
                     new TypeReference<LinkedHashMap<Integer, Ingredient>>() {
                     });
