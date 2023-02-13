@@ -34,7 +34,8 @@ public class FilesServiceImpl implements FilesService {
         try {
             return Files.readString(Path.of(filesDir, fileName + ".json"));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            return null;
         }
     }
 

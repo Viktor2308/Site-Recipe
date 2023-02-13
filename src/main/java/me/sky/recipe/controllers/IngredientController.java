@@ -59,7 +59,7 @@ public class IngredientController {
     )
     @ApiResponses(value = {
             @ApiResponse(
-                    responseCode = "200",
+                    responseCode = "201",
                     description = "ингредиент создан"
             )
     }
@@ -81,12 +81,16 @@ public class IngredientController {
                     content = {
                             @Content(
                                     mediaType = "application/json",
-                                    array = @ArraySchema(
-                                            schema = @Schema(implementation = Ingredient.class)
+                                    schema = @Schema(
+                                            implementation = Ingredient.class
                                     )
                             )
                     }
             ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Рецепт не найден"
+            )
     }
     )
     public ResponseEntity<Ingredient> getIngredient(@PathVariable(name = "id") int id) {

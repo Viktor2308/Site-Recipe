@@ -77,7 +77,7 @@ public class IngredientServiceImpl implements IngredientService {
                     new TypeReference<LinkedHashMap<Integer, Ingredient>>() {
                     });
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 

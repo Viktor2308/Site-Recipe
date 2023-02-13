@@ -77,7 +77,7 @@ public class RecipeServiceImpl implements RecipeService {
                     new TypeReference<LinkedHashMap<Integer, Recipe>>() {
                     });
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 }

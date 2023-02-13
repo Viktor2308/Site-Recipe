@@ -82,14 +82,16 @@ public class RecipeController {
                     content = {
                             @Content(
                                     mediaType = "application/json",
-                                    array = @ArraySchema(
-                                            schema = @Schema(
-                                                    implementation = Recipe.class
-                                            )
+                                    schema = @Schema(
+                                            implementation = Recipe.class
                                     )
                             )
                     }
             ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "рецепт не найден"
+            )
     }
     )
     public ResponseEntity<Recipe> read(@PathVariable(name = "id") int id) {
@@ -107,14 +109,12 @@ public class RecipeController {
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Рецепт найден",
+                    description = "Рецепт изменен",
                     content = {
                             @Content(
                                     mediaType = "application/json",
-                                    array = @ArraySchema(
-                                            schema = @Schema(
-                                                    implementation = Recipe.class
-                                            )
+                                    schema = @Schema(
+                                            implementation = Recipe.class
                                     )
                             )
                     }
