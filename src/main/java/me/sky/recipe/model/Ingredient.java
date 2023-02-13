@@ -5,6 +5,9 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
+/**
+ * Ingredient
+ */
 public class Ingredient {
     private String name;
     private int weight;

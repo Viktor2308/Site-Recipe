@@ -1,21 +1,28 @@
 package me.sky.recipe.services.impl;
 
+import me.sky.recipe.exeption.ValidationException;
 import me.sky.recipe.model.Ingredient;
 import me.sky.recipe.services.IngredientService;
+import me.sky.recipe.services.ValidationService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class IngredientServiceImpl implements IngredientService {
     private static int idIngredients = 0;
     private final Map<Integer, Ingredient> ingredientsMap = new LinkedHashMap<>();
+    private final ValidationService validationService;
+
+    public IngredientServiceImpl(ValidationService validationService) {
+        this.validationService = validationService;
+    }
 
     @Override
     public void addNewIngredient(Ingredient ingredient) {
+        if (!validationService.validate(ingredient)) {
+            throw new ValidationException(ingredient.toString());
+        }
         ingredientsMap.put(idIngredients++, ingredient);
     }
 
@@ -25,8 +32,8 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    public Ingredient getIngredient(int num) {
-        return ingredientsMap.get(num);
+    public Ingredient getIngredient(int id) {
+        return ingredientsMap.get(id);
     }
 
     @Override
