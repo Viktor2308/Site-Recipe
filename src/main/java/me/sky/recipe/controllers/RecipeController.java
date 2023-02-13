@@ -119,8 +119,11 @@ public class RecipeController {
                             @Content(
                                     mediaType = "application/json",
                                     schema = @Schema(
-                                            implementation = Ingredient.class
-                                    )
+
+                                            implementation = Recipe.class
+
+
+                                  )
                             )
                     }
             )
