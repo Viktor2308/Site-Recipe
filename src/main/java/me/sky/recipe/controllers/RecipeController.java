@@ -7,14 +7,21 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import me.sky.recipe.model.Ingredient;
 import me.sky.recipe.model.Recipe;
 import me.sky.recipe.services.RecipeService;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
+
 
 
 @RestController
@@ -123,7 +130,7 @@ public class RecipeController {
                                             implementation = Recipe.class
 
 
-                                  )
+                                    )
                             )
                     }
             )
@@ -154,6 +161,54 @@ public class RecipeController {
         return recipeService.deleteRecipe(id)
                 ? new ResponseEntity<>(HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping(value = "/file")
+    @Operation(
+            summary = "вся коллекция рецептов в файле",
+            description = "получения списка всех рецептов в файле"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "рецепты найдены",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    array = @ArraySchema(
+                                            schema = @Schema(
+                                                    implementation = Recipe.class
+                                            )
+                                    )
+                            )
+                    }
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Рецепты не найдены"
+            )
+    }
+    )
+    public ResponseEntity<?> getAllRecipeReportInFile() {
+        try {
+            Path path = recipeService.createAllRecipeReport();
+
+            if (Files.size(path) != 0) {
+                InputStreamResource resource = new InputStreamResource(new FileInputStream(path.toFile()));
+                return ResponseEntity.ok()
+                        .contentType(MediaType.TEXT_PLAIN)
+                        .contentLength(Files.size(path))
+                        .header(HttpHeaders.CONTENT_DISPOSITION,
+                                "attachment; filename =\"RecipeReport.txt\" ")
+                        .body(resource);
+            } else {
+                return ResponseEntity.noContent().build();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(e.toString());
+        }
     }
 }
 

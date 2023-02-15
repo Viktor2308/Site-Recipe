@@ -17,7 +17,7 @@ public class Recipe {
     private String name;
     private int cookingTimeMin;
     private List<Ingredient> ingredientsList;
-    private Map<Integer, String> cookingInstructionsList;
+    private Map<String, String> cookingInstructionsList;
 
 
 }

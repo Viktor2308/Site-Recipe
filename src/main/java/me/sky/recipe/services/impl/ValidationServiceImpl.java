@@ -24,7 +24,6 @@ public class ValidationServiceImpl implements ValidationService {
     public boolean validate(Ingredient ingredient) {
         return ingredient != null
                 && !StringUtils.isEmpty(ingredient.getName())
-                && ingredient.getWeight() >0
                 && ingredient.getUnitOfMeasurement() != null;
     }
 }
