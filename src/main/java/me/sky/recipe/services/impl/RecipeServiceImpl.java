@@ -19,7 +19,7 @@ public class RecipeServiceImpl implements RecipeService {
     private Map<Integer, Recipe> recipeMap = new LinkedHashMap<>();
     private final ValidationService validationService;
     private final FilesService filesService;
-    private static final String DATA_FILE_NAME = "recipeData";
+    public static final String RECIPE_DATA = "recipeData";
 
     public RecipeServiceImpl(ValidationService validationService, FilesService filesService) {
         this.validationService = validationService;
@@ -32,7 +32,7 @@ public class RecipeServiceImpl implements RecipeService {
             throw new ValidationException(recipe.toString());
         }
         recipeMap.put(idRecipe++, recipe);
-        filesService.saveToFile(recipeMap, DATA_FILE_NAME);
+        filesService.saveToFile(recipeMap, RECIPE_DATA);
     }
 
 
@@ -51,7 +51,7 @@ public class RecipeServiceImpl implements RecipeService {
     public Recipe editRecipe(int id, Recipe recipe) {
         if (recipeMap.containsKey(id)) {
             recipeMap.put(id, recipe);
-            filesService.saveToFile(recipeMap, DATA_FILE_NAME);
+            filesService.saveToFile(recipeMap, RECIPE_DATA);
             return recipe;
         }
         return null;
@@ -72,7 +72,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     private void readFromFile() {
         try {
-            String json = filesService.readFromFile(DATA_FILE_NAME);
+            String json = filesService.readFromFile(RECIPE_DATA);
             recipeMap = new ObjectMapper().readValue(json,
                     new TypeReference<LinkedHashMap<Integer, Recipe>>() {
                     });
