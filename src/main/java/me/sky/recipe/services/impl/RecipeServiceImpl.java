@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import me.sky.recipe.exeption.ValidationException;
+import me.sky.recipe.model.Ingredient;
 import me.sky.recipe.model.Recipe;
 import me.sky.recipe.services.FilesService;
 import me.sky.recipe.services.RecipeService;
@@ -95,12 +96,20 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public Path createAllRecipeReport() throws IOException {
         Path path = filesService.createTempFile("allRecipe");
-        for (Recipe recipe : getAllRecipe()) {
             try (Writer writer = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
+                for (Recipe recipe : getAllRecipe()) {
                 writer.append(recipe.getName() + "\n" +
                         "Время приготовления: " + recipe.getCookingTimeMin() + "\n" +
-                        "Ингредиенты" + "\n" + recipe.getIngredientsList() + "\n" +
-                        "Инструкция приготовления:" + "\n" + recipe.getCookingInstructionsList());
+                        "Ингредиенты:" + "\n");
+                    for (Ingredient ingredient : recipe.getIngredientsList()) {
+                        writer.append("• "+ ingredient.getName() +
+                                " - " + ingredient.getWeight() +
+                                " " + ingredient.getUnitOfMeasurement()+ "\n");
+                    }
+                writer.append("Инструкция приготовления:" + "\n");
+                    for (Map.Entry<String,String> entry : recipe.getCookingInstructionsList().entrySet()) {
+                        writer.append(entry.getKey() + " " + entry.getValue() + "\n");
+                    };
                 writer.append("\n");
 
             }

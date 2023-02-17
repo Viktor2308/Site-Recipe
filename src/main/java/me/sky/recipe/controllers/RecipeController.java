@@ -174,12 +174,7 @@ public class RecipeController {
                     description = "рецепты найдены",
                     content = {
                             @Content(
-                                    mediaType = "application/json",
-                                    array = @ArraySchema(
-                                            schema = @Schema(
-                                                    implementation = Recipe.class
-                                            )
-                                    )
+                                    mediaType = "text/plain"
                             )
                     }
             ),
