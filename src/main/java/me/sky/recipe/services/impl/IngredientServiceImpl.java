@@ -60,6 +60,7 @@ public class IngredientServiceImpl implements IngredientService {
     public boolean deleteIngredient(int id) {
         if (ingredientsMap.containsKey(id)) {
             ingredientsMap.remove(id);
+            filesService.saveToFile(ingredientsMap, INGREDIENTS_DATA);
             return true;
         }
         return false;
@@ -67,7 +68,12 @@ public class IngredientServiceImpl implements IngredientService {
 
     @PostConstruct
     private void init() {
-        readFromFile();
+        try {
+            readFromFile();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void readFromFile() {

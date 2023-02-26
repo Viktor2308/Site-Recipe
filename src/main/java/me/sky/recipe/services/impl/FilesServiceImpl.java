@@ -5,8 +5,7 @@ import me.sky.recipe.services.FilesService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -58,5 +57,17 @@ public class FilesServiceImpl implements FilesService {
             return false;
         }
     }
+
+    @Override
+    public Path createTempFile(String suffix) {
+        try {
+            return Files.createTempFile(Path.of(filesDir), "tempFile", suffix);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
 
 }

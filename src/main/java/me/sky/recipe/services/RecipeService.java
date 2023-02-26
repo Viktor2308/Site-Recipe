@@ -2,6 +2,8 @@ package me.sky.recipe.services;
 
 import me.sky.recipe.model.Recipe;
 
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 /**
  * service for work with recipe
@@ -17,4 +19,5 @@ public interface RecipeService {
 
     boolean deleteRecipe(int id);
 
+    Path createAllRecipeReport() throws IOException;
 }

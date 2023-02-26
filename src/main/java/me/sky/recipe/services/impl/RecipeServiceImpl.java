@@ -5,18 +5,24 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import me.sky.recipe.exeption.ValidationException;
+import me.sky.recipe.model.Ingredient;
 import me.sky.recipe.model.Recipe;
 import me.sky.recipe.services.FilesService;
 import me.sky.recipe.services.RecipeService;
 import me.sky.recipe.services.ValidationService;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.*;
 
 @Service
 public class RecipeServiceImpl implements RecipeService {
     private static int idRecipe = 0;
-    private Map<Integer, Recipe> recipeMap = new LinkedHashMap<>();
+    private Map<Integer, Recipe> recipeMap = new HashMap<>();
     private final ValidationService validationService;
     private final FilesService filesService;
     public static final String RECIPE_DATA = "recipeData";
@@ -34,7 +40,6 @@ public class RecipeServiceImpl implements RecipeService {
         recipeMap.put(idRecipe++, recipe);
         filesService.saveToFile(recipeMap, RECIPE_DATA);
     }
-
 
 
     @Override
@@ -61,23 +66,56 @@ public class RecipeServiceImpl implements RecipeService {
     public boolean deleteRecipe(int id) {
         if (recipeMap.containsKey(id)) {
             recipeMap.remove(id);
+            filesService.saveToFile(recipeMap, RECIPE_DATA);
             return true;
         }
         return false;
     }
+
     @PostConstruct
     private void init() {
-        readFromFile();
+        try {
+            readFromFile();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void readFromFile() {
         try {
             String json = filesService.readFromFile(RECIPE_DATA);
             recipeMap = new ObjectMapper().readValue(json,
-                    new TypeReference<LinkedHashMap<Integer, Recipe>>() {
+                    new TypeReference<HashMap<Integer, Recipe>>() {
                     });
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public Path createAllRecipeReport() throws IOException {
+        Path path = filesService.createTempFile("allRecipe");
+            try (Writer writer = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
+                for (Recipe recipe : getAllRecipe()) {
+                writer.append(recipe.getName() + "\n" +
+                        "Время приготовления: " + recipe.getCookingTimeMin() + "\n" +
+                        "Ингредиенты:" + "\n");
+                    for (Ingredient ingredient : recipe.getIngredientsList()) {
+                        writer.append("• "+ ingredient.getName() +
+                                " - " + ingredient.getWeight() +
+                                " " + ingredient.getUnitOfMeasurement()+ "\n");
+                    }
+                writer.append("Инструкция приготовления:" + "\n");
+                    for (Map.Entry<String,String> entry : recipe.getCookingInstructionsList().entrySet()) {
+                        writer.append(entry.getKey() + " " + entry.getValue() + "\n");
+                    };
+                writer.append("\n");
+
+            }
+        }
+        return path;
+    }
+
+
 }

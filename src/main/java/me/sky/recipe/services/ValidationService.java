@@ -6,6 +6,7 @@ import me.sky.recipe.model.Recipe;
 /**
  * Validation service
  */
+
 public interface ValidationService {
     boolean validate(Recipe recipe);
 

@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
  */
 public class Ingredient {
     private String name;
-    private int weight;
+    private String weight;
     private String unitOfMeasurement;
 
 }
